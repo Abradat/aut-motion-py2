@@ -309,7 +309,6 @@ class servo:
 
     """
 
-
     def __init__(self, servoid):
         """ servo class initialization
 
@@ -317,7 +316,6 @@ class servo:
    	    servoid(int): the id of the servo
    	"""
         self.servoid = servoid
-
 
         #self.servomodel = get_model(servoid)
 
@@ -336,10 +334,6 @@ class servo:
                   0x04 for DRS-402
                   0x02 for DRS-202
         """
-
-
-
-
 
         data = []
         data.append(0x09)
