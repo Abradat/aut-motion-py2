@@ -2,26 +2,6 @@
 
 # -*- coding: utf-8 -*-
 
-"""
-@package: pyHerkulex
-@name: herkulex.py
-@author: Achu Wilson (achuwilson@gmail.com), Akhil Chandran  (akhilchandran.t.r@gmail.com)
-@version: 0.1
-
-This is a python library for interfacing the Herkulex range of smart 
-servo motors manufactured by Dongbu Robotics.
-
-The library was created by Achu Wilson (mailto:achu@sastrarobotics.com) 
-for the internal projects of Sastra Robotics
-
-This free software is distributed under the GNU General Public License.
-See http://www.gnu.org/licenses/gpl.html for details.
-
-For usage of this code for  commercial purposes contact Sastra Robotics 
-India Pvt. Ltd. (mailto:contact@sastrarobotics.com)
-
-
-""" 
 import time
 try:
     # PySerial Module
@@ -236,66 +216,13 @@ def send_data(data):
     stringtosend = ""
     for i in range(len(data)):
         byteformat = '%02X' % data[i]
-        #print byteformat
         stringtosend = stringtosend + '\\' + 'x' + byteformat
-    #stringtosend = stringtosend.decode('hex')
-    #print stringtosend, len(stringtosend)
-    #print type(stringtosend.decode('string_escape'))
 
     try:
-
-        #SERPORT.write(stringtosend.decode('string-escape'))
         SERPORT.write(stringtosend.decode('string-escape'))
-        #print stringtosend
-        #print "hello"
     except:
         raise HerkulexError("could not communicate with motors")
 
-
-
-def send_data2():
-    a = "\\xff\\xff\\x0c\\x05\\x06\\xa0\\x5e\\x2d\\x84\\x03\\x00\\x05".decode('string-escape')
-    c = ""
-    b = "sihdaohsohaodhohsada"
-    #print len(a)
-    #print a
-    #SERPORT.write(a)
-    #SERPORT.write("\xff\xff\x0c\x05\x06\x24\xda\x2d\x00\x02\x00\x05")
-    #SERPORT.write('\xFF\xFF\x07\x05\x07\x04\xFA')
-    an = ['\xFF\xFF\x0C\x05\x06\x4A\xB4\x2D\x7C\x00\x10\x05',
-          '\xFF\xFF\x0C\x05\x06\x24\xDA\x2D\x00\x02\x00\x05',
-          '\xFF\xFF\x0C\x05\x06\xA0\x5E\x2D\x84\x03\x00\x05',
-          '\xFF\xFF\x0C\x05\x06\x24\xDA\x2D\x00\x02\x00\x05',
-          '\xFF\xFF\x07\x05\x07\x04\xFA']
-
-    anns = ['\xFF\xFF\x0A\x05\x03\x58\xA6\x34\x01\x60',
-            '\xFF\xFF\x0C\x05\x05\x86\x78\xE8\x03\x00\x05\x64']
-    #aan = ['\xFF\xFF\x07\xDB\x07\xDA\x24',
-    #       '']
-    cnt = 1
-    for ax in anns:
-
-        SERPORT.write(ax)
-        #ax.replace('\\x', '').decode('hex')
-        #print ax
-        #print cnt
-        time.sleep(2)
-        cnt += 1
-
-    ii = '\\xFF\\xFF\\x0A\\x05\\x03\\xC0\\x3E\\x35\\x01\\x01'
-    jj = '\\xFF\\xFF\\x0C\\x05\\x06\\x4A\\xB4\\x2D\\x7C\\x00\\x10\\x05'
-
-    #SERPORT.write(ii.replace('\\x', '').decode('hex'))
-    #SERPORT.write(jj.replace('\\x', '').decode('hex'))
-    #print len(jj)
-    #SERPORT.write(str('\xFF\xFF\x09\x05\x02\x0E\xF0\x00\x01'))
-    #time.sleep(5)
-    #p = SERPORT.read(8)
-
-    #print p.encode('string-escape')
-
-    #SERPORT.write(a)
-    #time.sleep(5)
 
 def clear_errors():
     """ Clears the errors register of all Herkulex servos
@@ -373,11 +300,7 @@ def get_model(servoid):
         #return "1"
     except:
         raise HerkulexError("could not communicate with motors")
-        
-    #rxdata = SERPORT.read(100)
-    #return ord(rxdata[9])&0xFF
-    #print rxdata
-    #return 0
+
 
 class servo:
     """ The servo class
