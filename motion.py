@@ -3846,7 +3846,8 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(0)
         #MyCode Start
         self.recs = []
-        self.torquesOn()
+        #self.torquesOn()
+        self.torquesOff()
         self.updateMotors()
         thread.start_new_thread(self.updateThread, ())
 
@@ -3860,6 +3861,28 @@ class Ui_MainWindow(object):
         for mhomeBtn in mHomeBtns:
             mhomeBtn.clicked.connect(self.backward)
         #Shifting between Pages Finish
+
+        #Setting torques Start
+        self.mUpdateBtn.clicked.connect(self.checkTorques)
+        self.m1UpdateBtn.clicked.connect(lambda : self.mCheckTorque(1))
+        self.m2UpdateBtn.clicked.connect(lambda: self.mCheckTorque(2))
+        self.m3UpdateBtn.clicked.connect(lambda: self.mCheckTorque(3))
+        self.m4UpdateBtn.clicked.connect(lambda: self.mCheckTorque(4))
+        self.m5UpdateBtn.clicked.connect(lambda: self.mCheckTorque(5))
+        self.m6UpdateBtn.clicked.connect(lambda: self.mCheckTorque(6))
+        self.m7UpdateBtn.clicked.connect(lambda: self.mCheckTorque(7))
+        self.m8UpdateBtn.clicked.connect(lambda: self.mCheckTorque(8))
+        self.m9UpdateBtn.clicked.connect(lambda: self.mCheckTorque(9))
+        self.m10UpdateBtn.clicked.connect(lambda: self.mCheckTorque(10))
+        self.m11UpdateBtn.clicked.connect(lambda: self.mCheckTorque(11))
+        self.m12UpdateBtn.clicked.connect(lambda: self.mCheckTorque(12))
+        self.m13UpdateBtn.clicked.connect(lambda: self.mCheckTorque(13))
+        self.m14UpdateBtn.clicked.connect(lambda: self.mCheckTorque(14))
+        self.m15UpdateBtn.clicked.connect(lambda: self.mCheckTorque(15))
+        self.m16UpdateBtn.clicked.connect(lambda: self.mCheckTorque(16))
+        self.m17UpdateBtn.clicked.connect(lambda: self.mCheckTorque(17))
+        self.m18UpdateBtn.clicked.connect(lambda: self.mCheckTorque(18))
+        #Setting Torques Finish
 
         #Dialing Start
         self.m1AngDial.valueChanged.connect(lambda: self.updateAngDial(1))
@@ -4094,38 +4117,139 @@ class Ui_MainWindow(object):
             self.updateMotors()
             time.sleep(1)
 
+    def checkTorques(self):
+        if(motors.check == 0):
+            self.torquesOn()
+        else:
+            self.torquesOff()
+
     def torquesOn(self):
+        cnt = 0
         try:
             for motor in motors.motors:
                 motor.torque_on()
+                motors.torques[cnt] = 1
+                cnt += 1
             print("Motors Torque on")
         except:
             print("Torque on err")
+        motors.check = 1
+        self.mUpdateBtn.setText("Torque off")
 
     def torquesOff(self):
+        cnt = 0
         try:
             for motor in motors.motors:
                 motor.torque_off()
+                motors.torques[cnt] = 0
+                cnt += 1
             print("Motors Torque off")
         except:
             print("Torques off err")
+        motors.check = 0
+        self.mUpdateBtn.setText("Torque on")
+
+    def mCheckTorque(self, id):
+        if(motors.torques[id - 1] == 0):
+            self.mTorqueOn(id)
+        else:
+            self.mTorqueOff(id)
 
     def mTorqueOn(self, id):
         try:
             motors.motors[id - 1].torque_on()
+            motors.torques[id - 1] = 1
             print("Motor id " + id + " torque on")
         except:
             print("Motor id " + id + " torque on err")
 
+        if (id == 1):
+            self.m1UpdateBtn.setText("Torque off")
+        elif (id == 2):
+            self.m2UpdateBtn.setText("Toruqe off")
+        elif (id == 3):
+            self.m3UpdateBtn.setText("Toruqe off")
+        elif (id == 3):
+            self.m3UpdateBtn.setText("Toruqe off")
+        elif (id == 4):
+            self.m4UpdateBtn.setText("Toruqe off")
+        elif (id == 5):
+            self.m5UpdateBtn.setText("Toruqe off")
+        elif (id == 6):
+            self.m6UpdateBtn.setText("Toruqe off")
+        elif (id == 7):
+            self.m7UpdateBtn.setText("Toruqe off")
+        elif (id == 8):
+            self.m8UpdateBtn.setText("Toruqe off")
+        elif (id == 9):
+            self.m9UpdateBtn.setText("Toruqe off")
+        elif (id == 10):
+            self.m10UpdateBtn.setText("Toruqe off")
+        elif (id == 11):
+            self.m11UpdateBtn.setText("Toruqe off")
+        elif (id == 12):
+            self.m12UpdateBtn.setText("Toruqe off")
+        elif (id == 13):
+            self.m13UpdateBtn.setText("Toruqe off")
+        elif (id == 14):
+            self.m14UpdateBtn.setText("Toruqe off")
+        elif (id == 15):
+            self.m15UpdateBtn.setText("Toruqe off")
+        elif (id == 16):
+            self.m16UpdateBtn.setText("Toruqe off")
+        elif (id == 17):
+            self.m17UpdateBtn.setText("Toruqe off")
+        elif (id == 18):
+            self.m18UpdateBtn.setText("Toruqe off")
+
     def mTorqueOff(self, id):
         try:
             motors.motors[id - 1].torque_off()
+            motors.torques[id - 1] = 0
             print("Motor id " + id + " torque off")
         except:
             print("Motor id" + id  + " torque off err")
-
+        if (id == 1):
+            self.m1UpdateBtn.setText("Torque on")
+        elif (id == 2):
+            self.m2UpdateBtn.setText("Toruqe on")
+        elif (id == 3):
+            self.m3UpdateBtn.setText("Toruqe on")
+        elif (id == 3):
+            self.m3UpdateBtn.setText("Toruqe on")
+        elif (id == 4):
+            self.m4UpdateBtn.setText("Toruqe on")
+        elif (id == 5):
+            self.m5UpdateBtn.setText("Toruqe on")
+        elif (id == 6):
+            self.m6UpdateBtn.setText("Toruqe on")
+        elif (id == 7):
+            self.m7UpdateBtn.setText("Toruqe on")
+        elif (id == 8):
+            self.m8UpdateBtn.setText("Toruqe on")
+        elif (id == 9):
+            self.m9UpdateBtn.setText("Toruqe on")
+        elif (id == 10):
+            self.m10UpdateBtn.setText("Toruqe on")
+        elif (id == 11):
+            self.m11UpdateBtn.setText("Toruqe on")
+        elif (id == 12):
+            self.m12UpdateBtn.setText("Toruqe on")
+        elif (id == 13):
+            self.m13UpdateBtn.setText("Toruqe on")
+        elif (id == 14):
+            self.m14UpdateBtn.setText("Toruqe on")
+        elif (id == 15):
+            self.m15UpdateBtn.setText("Toruqe on")
+        elif (id == 16):
+            self.m16UpdateBtn.setText("Toruqe on")
+        elif (id == 17):
+            self.m17UpdateBtn.setText("Toruqe on")
+        elif (id == 18):
+            self.m18UpdateBtn.setText("Toruqe on")
 
     def updateMotors(self):
+        print(motors.torques)
         #motor 1
         try:
             self.m1Ang.setText(str(motors.motors[0].get_servo_angle()))
@@ -5067,7 +5191,7 @@ class Ui_MainWindow(object):
         self.m17Ang.setText(_translate("MainWindow", "None", None))
         self.recSavedLabel.setText(_translate("MainWindow", "Records saved : ", None))
         self.recNumLabel.setText(_translate("MainWindow", "0", None))
-        self.mUpdateBtn.setText(_translate("MainWindow", "Update Motors", None))
+        self.mUpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m9.setText(_translate("MainWindow", "9", None))
         self.m9Ang.setText(_translate("MainWindow", "None", None))
         self.m9Pos.setText(_translate("MainWindow", "None", None))
@@ -5113,7 +5237,7 @@ class Ui_MainWindow(object):
         self.m1ErrNum.setText(_translate("MainWindow", "None", None))
         self.m1TempNum.setText(_translate("MainWindow", "None", None))
         self.m1GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m1UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m1UpdateBtn.setText(_translate("MainWindow", "Torque On", None))
         self.m1AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m1PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m1AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5130,7 +5254,7 @@ class Ui_MainWindow(object):
         self.m2ErrNum.setText(_translate("MainWindow", "None", None))
         self.m2TempNum.setText(_translate("MainWindow", "None", None))
         self.m2GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m2UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m2UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m2AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m2PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m2AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5148,7 +5272,7 @@ class Ui_MainWindow(object):
         self.m3ErrNum.setText(_translate("MainWindow", "None", None))
         self.m3TempNum.setText(_translate("MainWindow", "None", None))
         self.m3GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m3UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m3UpdateBtn.setText(_translate("MainWindow", "Torque On", None))
         self.m3AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m3PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m3AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5166,7 +5290,7 @@ class Ui_MainWindow(object):
         self.m4ErrNum.setText(_translate("MainWindow", "None", None))
         self.m4TempNum.setText(_translate("MainWindow", "None", None))
         self.m4GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m4UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m4UpdateBtn.setText(_translate("MainWindow", "Torque On", None))
         self.m4AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m4PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m4AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5184,7 +5308,7 @@ class Ui_MainWindow(object):
         self.m5ErrNum.setText(_translate("MainWindow", "None", None))
         self.m5TempNum.setText(_translate("MainWindow", "None", None))
         self.m5GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m5UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m5UpdateBtn.setText(_translate("MainWindow", "Torque On", None))
         self.m5AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m5PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m5AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5193,7 +5317,7 @@ class Ui_MainWindow(object):
         self.m5Label.setText(_translate("MainWindow", "Motor 5", None))
         self.m6Label.setText(_translate("MainWindow", "Motor 6", None))
         self.m6GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m6UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m6UpdateBtn.setText(_translate("MainWindow", "Torque On", None))
         self.m6AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m6PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m6AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5211,7 +5335,7 @@ class Ui_MainWindow(object):
         self.m6TempNum.setText(_translate("MainWindow", "None", None))
         self.m7Label.setText(_translate("MainWindow", "Motor 7", None))
         self.m7GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m7UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m7UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m7AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m7PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m7AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5239,7 +5363,7 @@ class Ui_MainWindow(object):
         self.m8TempNum.setText(_translate("MainWindow", "None", None))
         self.m8Label.setText(_translate("MainWindow", "Motor 8", None))
         self.m8GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m8UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m8UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m8AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m8PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m8AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5247,7 +5371,7 @@ class Ui_MainWindow(object):
         self.m8HomeBtn.setText(_translate("MainWindow", "Back to Home", None))
         self.m9Label.setText(_translate("MainWindow", "Motor 9", None))
         self.m9GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m9UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m9UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m9AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m9PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m9AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5265,7 +5389,7 @@ class Ui_MainWindow(object):
         self.m9TempNum.setText(_translate("MainWindow", "None", None))
         self.m10Label.setText(_translate("MainWindow", "Motor 10", None))
         self.m10GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m10UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m10UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m10AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m10PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m10AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5283,7 +5407,7 @@ class Ui_MainWindow(object):
         self.m10TempNum.setText(_translate("MainWindow", "None", None))
         self.m11Label.setText(_translate("MainWindow", "Motor 11", None))
         self.m11GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m11UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m11UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m11AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m11PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m11AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5301,7 +5425,7 @@ class Ui_MainWindow(object):
         self.m11TempNum.setText(_translate("MainWindow", "None", None))
         self.m12Label.setText(_translate("MainWindow", "Motor 12", None))
         self.m12GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m12UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m12UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m12AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m12PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m12AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5319,7 +5443,7 @@ class Ui_MainWindow(object):
         self.m12TempNum.setText(_translate("MainWindow", "None", None))
         self.m13Label.setText(_translate("MainWindow", "Motor 13", None))
         self.m13GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m13UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m13UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m13AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m13PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m13AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5337,7 +5461,7 @@ class Ui_MainWindow(object):
         self.m13TempNum.setText(_translate("MainWindow", "None", None))
         self.m14Label.setText(_translate("MainWindow", "Motor 14", None))
         self.m14GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m14UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m14UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m14AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m14PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m14AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5355,7 +5479,7 @@ class Ui_MainWindow(object):
         self.m14TempNum.setText(_translate("MainWindow", "None", None))
         self.m15Label.setText(_translate("MainWindow", "Motor 15", None))
         self.m15GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m15UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m15UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m15AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m15PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m15AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5373,7 +5497,7 @@ class Ui_MainWindow(object):
         self.m15TempNum.setText(_translate("MainWindow", "None", None))
         self.m16Label.setText(_translate("MainWindow", "Motor 16", None))
         self.m16GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m16UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m16UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m16AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m16PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m16AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5391,7 +5515,7 @@ class Ui_MainWindow(object):
         self.m16TempNum.setText(_translate("MainWindow", "None", None))
         self.m17Label.setText(_translate("MainWindow", "Motor 17", None))
         self.m17GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m17UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m17UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m17AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m17PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m17AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
@@ -5409,7 +5533,7 @@ class Ui_MainWindow(object):
         self.m17TempNum.setText(_translate("MainWindow", "None", None))
         self.m18Label.setText(_translate("MainWindow", "Motor 18", None))
         self.m18GoalTLabel.setText(_translate("MainWindow", "Goal Time", None))
-        self.m18UpdateBtn.setText(_translate("MainWindow", "Update Motor", None))
+        self.m18UpdateBtn.setText(_translate("MainWindow", "Torque on", None))
         self.m18AngleLabel.setText(_translate("MainWindow", "Angle", None))
         self.m18PositionLabel.setText(_translate("MainWindow", "Position", None))
         self.m18AngleBtn.setText(_translate("MainWindow", "Go Angle", None))
