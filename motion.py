@@ -4102,6 +4102,29 @@ class Ui_MainWindow(object):
         except:
             print("Torque on err")
 
+    def torquesOff(self):
+        try:
+            for motor in motors.motors:
+                motor.torque_off()
+            print("Motors Torque off")
+        except:
+            print("Torques off err")
+
+    def mTorqueOn(self, id):
+        try:
+            motors.motors[id - 1].torque_on()
+            print("Motor id " + id + " torque on")
+        except:
+            print("Motor id " + id + " torque on err")
+
+    def mTorqueOff(self, id):
+        try:
+            motors.motors[id - 1].torque_off()
+            print("Motor id " + id + " torque off")
+        except:
+            print("Motor id" + id  + " torque off err")
+
+
     def updateMotors(self):
         #motor 1
         try:
